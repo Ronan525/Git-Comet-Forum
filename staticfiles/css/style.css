@@ -1,0 +1,563 @@
+/* General Styles */
+body {
+    background-color: #1e1e1e;
+    font-family: 'Oxanium', sans-serif;
+    color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    color: inherit; /* Ensure visited links have the same color as unvisited links */
+}
+
+a:hover {
+    color: #E84610;
+}
+
+a:hover:visited {
+    color: #E84610; /* Ensure visited links maintain the hover color */
+}
+
+/* Typography */
+.brand {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.red-o {
+    color: #E84610;
+}
+
+.thin {
+    font-weight: 300;
+}
+
+.posts-heading,
+.draft-posts-heading {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    border-bottom: 1px solid #E84610; /* Bottom border */
+    color: #f5f5f5;
+    padding: 0.5rem 1rem; /* Adjust padding to make the border horizontally smaller */
+    margin: 0 auto; /* Center the heading */
+    display: inline-block; /* Make the heading inline-block to respect the padding */
+    background: transparent;
+    text-align: center;
+}
+
+/* Background Colors */
+.light-bg {
+    background-color: #2e2e2e;
+}
+
+.dark-bg {
+    background-color: #1e1e1e;
+}
+
+.main-bg {
+    background-color: #1e1e1e;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #1e1e1e;
+}
+
+.navbar-brand {
+    font-family: 'Oxanium', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.navbar-text {
+    color: #f5f5f5;
+}
+
+.nav-link {
+    color: #f5f5f5;
+}
+
+.nav-link.active {
+    color: #E84610;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    background-color: #2e2e2e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body {
+    padding: 1rem;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #f5f5f5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-text {
+    font-size: 1rem; /* Increase the font size */
+    color: #ffffff; /* Set the text color to solid white */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-text-post {
+    font-size: 1rem; /* Increase the font size */
+    color: #ffffff; /* Set the text color to solid white */
+    overflow: visible; /* Allow text to overflow */
+    text-overflow: initial; /* Remove ellipsis */
+    white-space: normal; /* Allow text to wrap */
+}
+
+/* Image Container */
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-flash {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    background-color: #188181;
+    color: white;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.scale {
+    width: 100%;
+    height: auto;
+}
+
+
+/* Applies a border to post and comment cards */
+.post-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #2e2e2e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E84610;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.post-content:hover {
+    transform: translateY(-5px);
+}
+
+.post-content .card-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.comment-content {
+    border: 1px solid #E84610;
+}
+
+/* Masthead */
+.masthead {
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    height: 33vh;
+    width: 100%;
+}
+
+.masthead-text {
+    background-color: #2e2e2e;
+    color: white;
+    position: relative;
+    padding: 1rem;
+}
+
+.masthead-image {
+    position: relative;
+    overflow: hidden;
+    background-color: #1e1e1e; /* Match the site's dark background color */
+}
+
+.masthead-image img {
+    width: 100%;
+    height: auto;
+    opacity: 0.8; /* Optional: Add slight transparency to the image */
+}
+
+.masthead-image:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 90%;
+    height: 100%;
+    width: 150%;
+    background: #2e2e2e;
+    transform: skew(15deg);
+    z-index: 100;
+}
+
+/* Links */
+.post-link {
+    color: #f5f5f5;
+}
+
+.post-link:hover {
+    color: #E84610;
+}
+
+.post-link:visited {
+    color: #f5f5f5; /* Ensure visited post links have the same color as unvisited links */
+}
+
+.post-link:hover:visited {
+    color: #E84610; /* Ensure visited post links maintain the hover color */
+}
+
+/* Buttons */
+.btn-signup {
+    background-color: #E84610; /* Site's accent color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-signup:hover,
+.btn-signup:focus {
+    background-color: #d73c0f; /* Slightly darker shade for hover/focus */
+    color: #fff; /* Ensure text color remains white */
+    outline: none;
+}
+
+.btn-edit {
+    background-color: #E84610;
+    color: #fff;
+}
+
+.btn-signup:hover,
+.btn-signup:active {
+    background-color: transparent;
+    color: #E84610;
+    border: 1px solid #E84610;
+}
+
+.btn-like {
+    color: #E84610;
+    border: none;
+    background: transparent;
+}
+
+.btn-delete {
+    color: #fff;
+    background: #E84610;
+}
+
+.btn-like:hover,
+.btn-like:active {
+    color: #E84610;
+    background: transparent;
+    border: none;
+}
+
+.btn-signout {
+    background-color: #E84610; /* Site's accent color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-signout:hover,
+.btn-signout:focus {
+    background-color: #d73c0f; /* Slightly darker shade for hover/focus */
+    color: #fff; /* Ensure text color remains white */
+    outline: none;
+}
+
+.btn-secondary {
+    background-color: #444; /* Secondary button color */
+    color: #f5f5f5; /* Light text color */
+    border: none;
+    padding: 10px 20px; /* Same padding as btn-signup */
+    font-size: 1rem; /* Same font size as btn-signup */
+    border-radius: 4px; /* Same border radius as btn-signup */
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: #333; /* Slightly darker shade for hover/focus */
+    color: #f5f5f5; /* Ensure text color remains light */
+    outline: none;
+}
+
+/* Miscellaneous */
+.faded {
+    color: rgb(172, 175, 175);
+}
+
+.approval {
+    color: rgb(222, 146, 168);
+}
+
+/* Contact Us Form Styles */
+.contact-form-container {
+    background-color: #2e2e2e;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form-container h1 {
+    color: #E84610;
+}
+
+.contact-form-container p {
+    color: #b0b0b0;
+}
+
+.contact-form-container .form-control {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border: 1px solid #444;
+}
+
+.contact-form-container .form-control:focus {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border-color: #E84610;
+    box-shadow: none;
+}
+
+.contact-form-container .btn-primary {
+    background-color: #E84610;
+    border-color: #E84610;
+}
+
+.contact-form-container .btn-primary:hover {
+    background-color: #d73c0f;
+    border-color: #d73c0f;
+}
+
+/* Custom Alert Styles */
+.alert-custom {
+    background-color: #E84610; /* Match the site's accent color */
+    color: #f5f5f5; /* Light text color for contrast */
+    border: 1px solid #d73c0f; /* Slightly darker border */
+}
+
+.alert-custom p {
+    color: inherit; /* Inherit color from parent */
+    padding: 0.5rem;
+}
+
+/* Pagination Styles */
+.pagination .page-link {
+    color: #f5f5f5; /* Default text color */
+    background-color: #2e2e2e; /* Background color */
+    border: 1px solid #444; /* Border color */
+}
+
+.pagination .page-link:hover {
+    color: #E84610; /* Hover text color */
+    background-color: #1e1e1e; /* Hover background color */
+    border-color: #E84610; /* Hover border color */
+}
+
+.pagination .page-item.active .page-link {
+    color: #fff; /* Active text color */
+    background-color: #E84610; /* Active background color */
+    border-color: #E84610; /* Active border color */
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: #2e2e2e; /* Dark background color */
+    color: #f5f5f5; /* Light text color */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #444; /* Border color */
+}
+
+.modal-footer {
+    border-top: 1px solid #444; /* Border color */
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #E84610; /* Primary button color */
+    border-color: #E84610; /* Primary button border color */
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #d73c0f; /* Darker shade for hover/focus */
+    border-color: #d73c0f; /* Darker shade for hover/focus */
+}
+
+.btn-secondary {
+    background-color: #444; /* Secondary button color */
+    border-color: #444; /* Secondary button border color */
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: #333; /* Darker shade for hover/focus */
+    border-color: #333; /* Darker shade for hover/focus */
+}
+
+/* Button Styles */
+.create-post-btn {
+    background: #E84610; /* Primary button color */
+    border-color: #E84610; /* Primary button border color */
+    color: #fff; /* Text color */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.create-post-btn:hover,
+.create-post-btn:focus {
+    background: transparent; /* Darker shade for hover/focus */
+    border-color: #E84610; /* Darker shade for hover/focus */
+    color: #fff; /* Ensure text color remains white */
+    outline: none;
+}
+
+/* Form Control Styles */
+.form-control.custom-input {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.form-control.custom-input:focus {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border-color: #E84610;
+    box-shadow: none;
+}
+
+/* Ensure all text fields are the same length and height */
+.form-control.custom-input,
+.form-control.custom-input[type="text"],
+.form-control.custom-input[type="email"],
+.form-control.custom-input[type="password"] {
+    width: 100%;
+    height: 40px; /* Set a consistent height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.form-control.custom-input:focus {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border-color: #E84610;
+    box-shadow: none;
+}
+
+/* Form Check Styles */
+.form-check-input.custom-check {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+}
+
+.form-check-input.custom-check:checked {
+    background-color: #E84610;
+    border-color: #E84610;
+}
+
+.form-check-label {
+    color: #f5f5f5;
+}
+
+/* Custom Heading Styles */
+
+
+.post-row {
+    border: 1px solid #E84610;
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    background-color: #2e2e2e; /* Dark background color */
+    border: 1px solid #444; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.dropdown-menu .dropdown-item {
+    color: #f5f5f5; /* Light text color */
+    padding: 10px 20px; /* Padding for items */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background-color: #1e1e1e; /* Slightly darker background on hover/focus */
+    color: #E84610; /* Accent color for text on hover/focus */
+    outline: none; /* Remove outline */
+}
+
+.dropdown-menu .dropdown-item.active {
+    background-color: #E84610; /* Active background color */
+    color: #fff; /* Active text color */
+}
+

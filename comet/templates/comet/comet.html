@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-4 text-center">
+      <img src="{{ user.userprofile.profile_picture }}" width="75%" alt="Profile Picture" />
+    </div>
+    <div class="col-8">
+      {% if bio %}
+        <div id="bio-content">
+          <h3>{{ bio.title }}</h3>
+          <p>{{ bio.content }}</p>
+          <button class="btn btn-signup" onclick="showUpdateForm()">Update</button>
+          <p class="text-end"><em>Updated on: {{ bio.updated_on }}</em></p>
+        </div>
+      {% endif %}
+      <div id="bio-form" style="display: none;">
+        <form method="post" action="{% url 'mybio' %}" onsubmit="hideUpdateForm()">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{% if bio %}{{ bio.title }}{% endif %}">
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" name="content" rows="5">{% if bio %}{{ bio.content }}{% endif %}</textarea>
+          </div>
+          <button type="submit" class="btn btn-signup">Submit</button>
+          <button type="button" class="btn btn-signup" onclick="hideUpdateForm()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/comet.js' %}"></script>
+{% endblock content %}
