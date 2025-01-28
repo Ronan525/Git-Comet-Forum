@@ -119,7 +119,47 @@ Overall, GitHub Copilot has significantly enhanced my productivity and in some c
 
 - **Profile Pictures**: Originally, my idea for Git Comet users to change their profile picture allowed users to upload custom images from their local machine to the site. However, I soon discovered that this was easier said than done, as not only was the implementation of this feature causing issues with HTML validation and site performances, but the JavaScript needed for a drag and drop system was proving to be time consuming and incompatible with many site elements. There was also the issue with accessibility, as the dropdown menu, one of the core functions of Git Comet, may blend into the background too well if the uploaded image was too similar to the sites colour scheme. Due to this, I altered the idea and settled on a preset list of profile pictures a signed in user can choose between.
 
-### Bug Fixes
+- **Storm Eowyn**: Due to Storm Eowyn, I had lost internet all day January 25th, preventing me from commiting work I had completed that day. This caused me to lose a fair amount of work. In total, I had lost: 
+
+- Additions to the README.md
+- Accessibility improvements
+- Performance improvements
+- Account automated tests
+- Post content bug fix
+
+## Testing
+
+ **Automated Testing**: During development, I had created multiple `tests.py` files. Inside these files are classes which would test numerous models on the site. I used the command `python3 manage.py test` to begin these tests. In total, I tested both the `Forum` and `Comet` apps, this includes all of their respective models, such as:
+
+- Posts
+- Comments
+- Ratings
+- Contact Us
+- User Profile Creation
+- Bio Creation/Update
+- **These tests did not return any errors.**
+
+
+ **Manual Testing**: All throughout development I had constantly been manually testing the site myself. Most of my manual testing was to determine if:
+
+- JavaScript functions worked correctly
+- CSS applied correctly
+- Posts could be published
+- Posts could be rated
+- Posts could be read
+- Posts could be deleted
+- Posts could be updated
+- Posts could be drafted
+- Comments could be posted
+- Comments could be deleted
+- Accounts could be created
+- Accounts could be edited
+- Admin panel had sufficient tools
+- Links worked correctly
+
+**How I tested**: I mainly used the Google dev tools, though on occassion I did load the site on a mobile device through the Heroku deployment. The dev tools provided me with the information needed to identify faults, test in the browser, and apply that to the file itself.
+
+## Bug Fixes
 
 - Duplicate ratings.
 - Ratings not properly applying.
