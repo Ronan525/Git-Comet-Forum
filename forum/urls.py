@@ -8,7 +8,19 @@ urlpatterns = [
     path('post/new/', views.PostCreateView.as_view(), name='post-create'),
     path('<int:post_id>/upvote/', views.upvote, name='upvote'),
     path('<int:post_id>/downvote/', views.downvote, name='downvote'),
-    path('<slug:slug>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
-    path('comment/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='comment-delete'),
-    path('<slug:slug>/publish/', views.PostPublishView.as_view(), name='post-publish'),  # Added publish URL pattern
+    path(
+        '<slug:slug>/delete/',
+        views.PostDeleteView.as_view(),
+        name='post-delete',
+    ),
+    path(
+        'comment/<int:pk>/delete/',
+        views.CommentDeleteView.as_view(),
+        name='comment-delete',
+    ),
+    path(
+        '<slug:slug>/publish/',
+        views.PostPublishView.as_view(),
+        name='post-publish',
+    ),  # Added publish URL pattern
 ]

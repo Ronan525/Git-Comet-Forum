@@ -5,10 +5,12 @@ from django.urls import reverse, resolve
 from .views import PostListView, PostDetailView
 from .forms import CommentForm
 
-class PostModelTest(TestCase):
 
+class PostModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user = User.objects.create_user(
+            username='testuser', password='12345'
+        )
         self.post = Post.objects.create(
             title='Test Post',
             content='This is a test post.',
@@ -46,10 +48,12 @@ class PostModelTest(TestCase):
         self.assertEqual(posts[0], post2)
         self.assertEqual(posts[1], self.post)
 
-class CommentModelTest(TestCase):
 
+class CommentModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user = User.objects.create_user(
+            username='testuser', password='12345'
+        )
         self.post = Post.objects.create(
             title='Test Post',
             content='This is a test post.',
@@ -84,10 +88,12 @@ class CommentModelTest(TestCase):
         self.assertEqual(comments[0], comment2)
         self.assertEqual(comments[1], self.comment)
 
-class RatingModelTest(TestCase):
 
+class RatingModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user = User.objects.create_user(
+            username='testuser', password='12345'
+        )
         self.post = Post.objects.create(
             title='Test Post',
             content='This is a test post.',
@@ -120,27 +126,36 @@ class RatingModelTest(TestCase):
                 vote=-1
             )
 
-class ContactMessageModelTest(TestCase):
 
+class ContactMessageModelTest(TestCase):
     def setUp(self):
         self.contact_message = ContactMessage.objects.create(
             name='John Doe',
             email='john.doe@example.com',
-            message='This is a test message.'
+            message=(
+                'This is a test message.'
+            )
         )
 
     def test_contact_message_creation(self):
         self.assertEqual(self.contact_message.name, 'John Doe')
         self.assertEqual(self.contact_message.email, 'john.doe@example.com')
-        self.assertEqual(self.contact_message.message, 'This is a test message.')
+        self.assertEqual(
+            self.contact_message.message, 'This is a test message.'
+        )
         self.assertIsNotNone(self.contact_message.date_submitted)
+        self.assertEqual(
+            str(self.contact_message),
+            'Message from John Doe '
+            '(john.doe@example.com)'
+        )
 
-    def test_contact_message_str_method(self):
-        self.assertEqual(str(self.contact_message), 'Message from John Doe (john.doe@example.com)')
 
 class PostViewTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user = User.objects.create_user(
+            username='testuser', password='12345'
+        )
         self.post = Post.objects.create(
             title='Test Post',
             content='This is a test post.',
@@ -154,9 +169,12 @@ class PostViewTest(TestCase):
         self.assertTemplateUsed(response, 'forum/index.html')
 
     def test_post_detail_view(self):
-        response = self.client.get(reverse('post-detail', args=[self.post.slug]))
+        response = self.client.get(
+            reverse('post-detail', args=[self.post.slug])
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'forum/post_detail.html')
+
 
 class CommentFormTest(TestCase):
     def test_comment_form_valid(self):
@@ -168,6 +186,7 @@ class CommentFormTest(TestCase):
         form_data = {'content': ''}
         form = CommentForm(data=form_data)
         self.assertFalse(form.is_valid())
+
 
 class URLTests(TestCase):
     def test_post_list_url_resolves(self):

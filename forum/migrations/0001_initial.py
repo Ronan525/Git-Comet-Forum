@@ -17,12 +17,36 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Post',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    )
+                ),
                 ('title', models.CharField(max_length=200, unique=True)),
                 ('content', models.TextField()),
                 ('date_posted', models.DateTimeField(auto_now_add=True)),
-                ('status', models.CharField(choices=[(0, 'Draft'), (1, 'Publish')], default='draft')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='forum_posts', to=settings.AUTH_USER_MODEL)),
+                (
+                    'status',
+                    models.CharField(
+                        choices=[
+                            (0, 'Draft'),
+                            (1, 'Publish')
+                        ],
+                        default='draft'
+                    )
+                ),
+                (
+                    'author',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name='forum_posts',
+                        to=settings.AUTH_USER_MODEL
+                    )
+                ),
             ],
         ),
     ]
