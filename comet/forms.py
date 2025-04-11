@@ -77,3 +77,14 @@ class UserProfileForm(forms.ModelForm):
                 'placeholder': 'Email'
             }),
         }
+
+
+def test_valid_user_profile_form(self):
+    form_data = {
+        'username': 'testuser',
+        'email': 'testuser@example.com',
+        'bio': 'This is a test bio.',
+        'profile_picture': '/static/images/default-profile.png',
+    }
+    form = UserProfileForm(data=form_data)
+    self.assertTrue(form.is_valid())

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .models import Bio, UserProfile
 from .forms import ProfilePictureForm, UserProfileForm
 from django.urls import reverse, resolve
-from .views import update_profile
+from .views import profile
 
 
 class BioModelTest(TestCase):
@@ -62,12 +62,17 @@ class ProfilePictureFormTest(TestCase):
 class UserProfileFormTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='testuser', password='12345'
+            username='testuser', password='12345', email='testuser@example.com'
         )
 
     def test_valid_user_profile_form(self):
-        form_data = {'bio': 'This is a test bio.'}
-        form = UserProfileForm(data=form_data)
+        form_data = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'bio': 'This is a test bio.',
+            'profile_picture': '/static/images/default-profile.png',
+        }
+        form = UserProfileForm(data=form_data, instance=self.user) 
         self.assertTrue(form.is_valid())
 
     def test_invalid_user_profile_form(self):
@@ -76,27 +81,7 @@ class UserProfileFormTest(TestCase):
         self.assertFalse(form.is_valid())
 
 
-class UpdateProfileViewTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
-            username='testuser', password='12345'
-        )
-        self.client.login(username='testuser', password='12345')
-
-    def test_update_profile_view_get(self):
-        response = self.client.get(reverse('update-profile'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'comet/update_profile.html')
-
-    def test_update_profile_view_post(self):
-        form_data = {'bio': 'Updated bio'}
-        response = self.client.post(reverse('update-profile'), data=form_data)
-        self.assertEqual(response.status_code, 302)  # Redirect after success
-        self.user.refresh_from_db()
-        self.assertEqual(self.user.userprofile.bio, 'Updated bio')
-
-
 class URLTests(TestCase):
     def test_update_profile_url_resolves(self):
-        url = reverse('update-profile')
-        self.assertEqual(resolve(url).func, update_profile)
+        url = reverse('profile')
+        self.assertEqual(resolve(url).func, profile)

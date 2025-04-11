@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from .models import Bio, UserProfile
 from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
 
 def mybio(request):
@@ -32,7 +33,7 @@ def mybio(request):
         bio.content = content
         bio.save()
 
-    # Retrieve the user's bio to display
+    # Retrieve the users bio to display
     bio = Bio.objects.filter(user=request.user).first()
     return render(request, 'comet/comet.html', {'bio': bio})
 
@@ -67,33 +68,27 @@ class UserProfileView(View):
 def profile(request):
     """
     Handle the display and update of the logged-in user's profile.
-
-    If the request method is POST, the function updates the user's profile
-    information, including their password and profile picture. Otherwise, it
-    displays the user's current profile information in a form.
-
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        HttpResponse: The rendered profile page with the user's profile form.
     """
-    # Get or create a UserProfile object for the current user
+    # Get or create the users profile
     user_profile, created = UserProfile.objects.get_or_create(
         user=request.user
     )
 
     if request.method == 'POST':
-        # Handle profile update
+        # If the request is a POST, process the form submission
         form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
-            # Save user information
+            # Save the user instance but do not commit yet
             user = form.save(commit=False)
+
+            # Check if a new password is provided and update it
             password = form.cleaned_data.get('password')
             if password:
-                # Update the user's password and refresh the session
                 user.set_password(password)
+                # Update the session authentication hash to prevent logout
                 update_session_auth_hash(request, user)
+
+            # Save the user instance
             user.save()
 
             # Update the user's profile picture
@@ -102,12 +97,18 @@ def profile(request):
             )
             user_profile.save()
 
-            # Redirect to the profile page after saving
+            # Add a success message for the user
+            messages.success(
+                request, "Profile information successfully updated."
+            )
+            # Redirect to the profile page after successful update
             return redirect('profile')
     else:
-        # Display the user's current profile information in a form
+        # If the request is a GET, then display the form
+        # with the current user instance
         form = UserProfileForm(instance=request.user)
 
+    # Render the profile page with the form and user profile data
     return render(
         request,
         'comet/profile.html',
