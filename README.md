@@ -129,35 +129,119 @@ Overall, GitHub Copilot has significantly enhanced my productivity and in some c
 
 ## Testing
 
- **Automated Testing**: During development, I had created multiple `tests.py` files. Inside these files are classes which would test numerous models on the site. I used the command `python3 manage.py test` to begin these tests. In total, I tested both the `Forum` and `Comet` apps, this includes all of their respective models, such as:
+### Automated Testing
 
-- Posts
-- Comments
-- Ratings
-- Contact Us
-- User Profile Creation
-- Bio Creation/Update
-- **These tests did not return any errors.**
+During development, I created multiple `tests.py` files to ensure the functionality of the site. These files contain classes that test various models, forms, views, and URLs across the `Forum` and `Comet` apps. Below is a detailed breakdown of the automated tests and how they helped me troubleshoot issues:
 
+#### **Models**
+- **Posts**: Verified that posts are created correctly, slugs are generated properly, and the string representation matches the title.
+- **Comments**: Ensured comments are linked to the correct post, have the correct default values (e.g., `approved_comment` is `False`), and the string representation matches the comment content.
+- **User Profiles**: Tested that user profiles are created with the correct attributes, including the profile picture and bio.
 
- **Manual Testing**: All throughout development I had constantly been manually testing the site myself. Most of my manual testing was to determine if:
+#### **Forms**
+- **CommentForm**: Validated that the form accepts valid data (e.g., non-empty content) and rejects invalid data (e.g., empty content).
+- **UserProfileForm**: Ensured the form validates correctly when all required fields are provided, including `username`, `email`, and `profile_picture`. 
+  - **Error Encountered**: The `test_valid_user_profile_form` initially failed because the `profile_picture` field did not match one of the predefined choices in the form. 
+  - **Solution**: Updated the test data to include a valid `profile_picture` value from the predefined choices in the form.
 
-- JavaScript functions worked correctly
-- CSS applied correctly
-- Posts could be published
-- Posts could be rated
-- Posts could be read
-- Posts could be deleted
-- Posts could be updated
-- Posts could be drafted
-- Comments could be posted
-- Comments could be deleted
-- Accounts could be created
-- Accounts could be edited
-- Admin panel had sufficient tools
-- Links worked correctly
+#### **Views**
+- **Post Views**: Tested that the `PostListView` and `PostDetailView` resolve correctly and return the expected templates.
+- **Profile View**: Verified that the profile update view handles both GET and POST requests correctly.
+  - **Error Encountered**: The `test_update_profile_view_post` initially failed with a 405 error because the view did not handle POST requests.
+  - **Solution**: Updated the `profile` view to handle POST requests and save the updated user profile data.
 
-**How I tested**: I mainly used the Google dev tools, though on occassion I did load the site on a mobile device through the Heroku deployment. The dev tools provided me with the information needed to identify faults, test in the browser, and apply that to the file itself.
+#### **URLs**
+- Ensured that all key URLs resolve to the correct views, including:
+  - `forum-home` → `PostListView`
+  - `post-detail` → `PostDetailView`
+  - `profile` → `profile`
+  - **Error Encountered**: The `test_update_profile_url_resolves` initially failed because the `profile` URL was not defined.
+  - **Solution**: Added the `profile` URL to the `comet/urls.py` file and mapped it to the `profile` view.
+
+#### **General Observations**
+- The tests were run using the `python manage.py test` command.
+- **Initial Errors**: Some tests failed due to missing or incorrect data in the test setup. For example:
+  - Missing required fields in forms.
+  - Incorrect URL mappings.
+  - Views not handling specific HTTP methods.
+- **Solutions**: These issues were resolved by:
+  - Updating test data to include all required fields.
+  - Adding missing URL patterns.
+  - Modifying views to handle the necessary HTTP methods.
+
+#### **Final Results**
+After resolving the errors, all tests passed successfully. This ensured that the core functionality of the site, including models, forms, views, and URLs, worked as expected. 
+
+### Manual Testing
+
+Throughout development, I conducted extensive manual testing to ensure the site functioned as intended. This involved testing various features, layouts, and interactions across different devices and browsers. Below is a detailed breakdown of the manual testing process:
+
+#### **JavaScript Functions**
+- Verified that all JavaScript functions worked as expected, including:
+  - Dropdown menus opening and closing correctly.
+  - Form validation providing real-time feedback.
+  - Buttons triggering the correct actions (submitting forms, deleting posts).
+  - Dynamic elements, such as modals and alerts, displaying and disappearing as intended.
+
+#### **CSS Styling**
+- Ensured that CSS was applied correctly across all pages:
+  - Verified consistent styling for buttons, links, and text elements. (this was a pain)
+  - Checked for proper alignment of elements on both desktop and mobile devices.
+  - Ensured that hover effects and transitions worked smoothly.
+
+#### **Posts**
+- **Publishing**: Verified that users could successfully publish posts with valid data.
+- **Rating**: Tested the rating system to ensure users could upvote and downvote posts.
+- **Reading**: Confirmed that posts displayed correctly on the forum page and individual post pages.
+- **Deleting**: Ensured that posts could be deleted by their authors and that a success notification appeared.
+- **Updating**: Verified that users could edit their posts and that changes were saved correctly.
+- **Drafting**: Tested the ability to save posts as drafts and publuish them later.
+
+#### **Comments**
+- **Posting**: Verified that users could post comments on published posts.
+- **Deleting**: Ensured that users could delete their own comments and that a success notification appeared.
+
+#### **Accounts**
+- **Creation**: Tested the user registration process to ensure accounts could be created successfully.
+- **Editing**: Verified that users could update their profile information, including their bio and profile picture.
+- **Authentication**: Ensured that users could log in and log out without issues. This also included the Remember Me option.
+
+#### **Admin Panel**
+- Verified that the admin panel provided sufficient tools for managing users, posts, and comments.
+- Tested the ability to approve or delete posts and comments from the admin interface.
+
+#### **Links**
+- Checked that all links across the site worked correctly and directed users to the intended pages.
+
+#### **Mobile Responsiveness**
+- Tested the site on various devices, including a smartphone and tablet, to ensure it was fully responsive.
+- Verified that all elements adjusted correctly to different screen sizes and orientations.
+
+#### **Cross-Browser Compatibility**
+- Tested the site on multiple browsers, including Chrome, Firefox, Opera, Edge, and Safari, to ensure consistent functionality and styling.
+
+#### **Accessibility**
+- Verified that all pages met accessibility standards:
+  - Ensured sufficient color contrast for text and background elements.
+  - Checked that all images had descriptive alt text.
+  - Tested keyboard navigation to ensure all interactive elements were accessible.
+  - Multiple people, all with varying technical abilities, was used for this.
+
+#### **How I Tested**
+- **Google DevTools**: Used Google Chrome's developer tools to simulate different devices, screen sizes, and network conditions. This allowed me to identify and fix layout issues, performance bottlenecks, and responsiveness problems. The Network tab was extremely useful for troubleshooting the POST issue which cropped up during automated testing.
+- **Mobile Devices**: Loaded the site on physical mobile devices through the Heroku deployment to test real-world performance and usability.
+- **Browser Testing**: Manually tested the site on multiple browsers to ensure consistent behavior and appearance.
+
+#### **Issues Identified and Resolved**
+- **Dropdown Menus**: Fixed an issue where dropdown menus opened horizontally instead of vertically on mobile devices.
+- **Profile Pictures**: Resolved a bug where profile pictures were not displaying correctly after being updated.
+- **Form Validation**: Fixed issues with form validation not providing feedback for invalid inputs.
+- **Mobile Responsiveness**: Addressed layout issues on smaller screens, such as misaligned elements and unreadable text.
+- **Broken Links**: Corrected several broken links in the navigation bar and footer.
+- **JavaScript Errors**: Fixed errors that caused buttons to malfunction on certain pages.
+
+#### **Final Results**
+After extensive manual testing and resolving all identified issues, the site is now fully functional, responsive, and accessible. This process ensured that users have a seamless experience across all devices and browsers, despite the ancient ones.
 
 ## Bug Fixes
 
