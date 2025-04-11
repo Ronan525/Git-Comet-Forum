@@ -6,6 +6,7 @@ from .models import Post, ContactMessage, Comment, Rating
 from .forms import ContactUsForm, CommentForm, PostForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 # Create your views here.
 
@@ -199,6 +200,7 @@ class CommentDeleteView(View):
         comment = get_object_or_404(Comment, pk=pk, author=request.user)
         post_slug = comment.post.slug
         comment.delete()
+        messages.success(request, "Comment successfully deleted")
         return redirect('post-detail', slug=post_slug)
 
 
@@ -213,6 +215,7 @@ class PostDeleteView(View):
         """
         post = get_object_or_404(Post, slug=slug, author=request.user)
         post.delete()
+        messages.success(request, "Post successfully deleted")
         return redirect('forum-home')
 
 
