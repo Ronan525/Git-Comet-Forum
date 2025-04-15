@@ -8,6 +8,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 
 
+@login_required
 def mybio(request):
     """
     Handle the creation or update of a user's bio.
@@ -15,12 +16,6 @@ def mybio(request):
     If the request method is POST, the function updates the user's bio with the
     provided title and content. Otherwise, it retrieves the user's existing bio
     and renders it on the comet page.
-
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        HttpResponse: The rendered comet page with the user's bio.
     """
     if request.method == 'POST':
         # Retrieve title and content from the POST request
@@ -33,7 +28,7 @@ def mybio(request):
         bio.content = content
         bio.save()
 
-    # Retrieve the users bio to display
+    # Retrieve the user's bio to display
     bio = Bio.objects.filter(user=request.user).first()
     return render(request, 'comet/comet.html', {'bio': bio})
 

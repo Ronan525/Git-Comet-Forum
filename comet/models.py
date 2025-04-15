@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Bio(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()

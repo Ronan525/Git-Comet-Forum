@@ -4,30 +4,32 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-4 text-center">
-      <img src="{{ user.userprofile.profile_picture }}" width="75%" alt="Profile Picture" />
+      <img src="{{ user.userprofile.profile_picture }}" width="75%" alt="Profile Picture" class="rounded-circle border" />
     </div>
     <div class="col-8">
       {% if bio %}
         <div id="bio-content">
-          <h3>{{ bio.title }}</h3>
-          <p>{{ bio.content }}</p>
-          <button class="btn btn-signup" onclick="showUpdateForm()">Update</button>
-          <p class="text-end"><em>Updated on: {{ bio.updated_on }}</em></p>
+          <h3 class="text-light">{{ bio.title }}</h3>
+          <p class="text-light">{{ bio.content }}</p>
+          <button class="btn btn-signup mt-3" onclick="showUpdateForm()">Update</button>
+          <p class="text-end text-muted"><em>Updated on: {{ bio.updated_on }}</em></p>
         </div>
       {% endif %}
       <div id="bio-form" style="display: none;">
         <form method="post" action="{% url 'mybio' %}" onsubmit="hideUpdateForm()">
           {% csrf_token %}
           <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value="{% if bio %}{{ bio.title }}{% endif %}">
+            <label for="title" class="form-label text-light">Title</label>
+            <input type="text" class="form-control custom-input" id="title" name="title" value="{% if bio %}{{ bio.title }}{% endif %}">
           </div>
           <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" id="content" name="content" rows="5">{% if bio %}{{ bio.content }}{% endif %}</textarea>
+            <label for="content" class="form-label text-light">Content</label>
+            <textarea class="form-control custom-input" id="content" name="content" rows="5">{% if bio %}{{ bio.content }}{% endif %}</textarea>
           </div>
-          <button type="submit" class="btn btn-signup">Submit</button>
-          <button type="button" class="btn btn-signup" onclick="hideUpdateForm()">Cancel</button>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-signup">Submit</button>
+            <button type="button" class="btn btn-secondary" onclick="hideUpdateForm()">Cancel</button>
+          </div>
         </form>
       </div>
     </div>
