@@ -66,7 +66,6 @@ The project is organized into several key directories and files:
 - **Contact Us**: The Contact Us page provides users with a way to reach out to the site administrators for support, feedback, or inquiries. This feature is essential for maintaining open communication with the user base and addressing any issues or suggestions they may have. It helps build trust and shows that the administrators are approachable and responsive to user needs.
 - **Bio**: The Bio feature allows users to create and update a personal biography on their profile. This adds a personal touch to user profiles and helps build a sense of community by allowing users to share more about themselves. It encourages users to connect on a more personal level and fosters a sense of belonging within the community.
 
-
 ## How I've Used Copilot
 
 GitHub Copilot has been an invaluable tool throughout the development of Git Comet. However, on many occassions, Copilot has provided me with incorrect code, used techniques I'm not familiar with, and many more small issues. Despite this, I've used Copilot to great effect. Here are some of the ways Copilot has assisted me in building this project.
@@ -104,11 +103,15 @@ Overall, GitHub Copilot has significantly enhanced my productivity and in some c
 
 ### W3C Validation
 
-- **W3C**: Throughout development, I had consciously been optimising my code ensuring that it was valid HTML5. Due to this, when it came time to do my first W3C validation test, I only had two errors, both on different sites. One error was seemingly a Heroku error (surprise surprise) as the validator could not connect to the page. The second error is seemingly unavoidable,as from what I can tell, the validator itself is incorrect. The error claims that there's _No p element in scope but a p end tag seen_, yet when checking the page source code at the line and column listed, this issue isn't present.
+- **W3C HTML Validation**: Throughout development, I had consciously been optimising my code ensuring that it was valid HTML5. Due to this, when it came time to do my first W3C validation test, I only had two errors, both on different sites. One error was seemingly a Heroku error (surprise surprise) as the validator could not connect to the page. The second error is seemingly unavoidable,as from what I can tell, the validator itself is incorrect. The error claims that there's _No p element in scope but a p end tag seen_, yet when checking the page source code at the line and column listed, this issue isn't present. The CSS validation returned with no errors, so no adjustments were made.
 
 <div style="text-align: center;">
     <img src="static/images/validation-error1.png" alt="Lighthouse Test 3 Mobile" style="max-width: 21%; height: auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <img src="static/images/validation-error2.png" alt="Lighthouse Test 3 Desktop" style="max-width: 42.075%; height: auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+</div>
+
+<div style="text-align: center;">
+    <img src="static/images/W3C-CSS-validation.png" alt="Successful CSS validation" style="max-width: 40%; height: auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 </div>
 
 - Despite these frustrations, I'm extremely happy with both the Lighthouse Scores, and the W3C Validation.
@@ -170,18 +173,66 @@ During development, I created multiple `tests.py` files to ensure the functional
   - Modifying views to handle the necessary HTTP methods.
 
 #### **Final Results**
-After resolving the errors, all tests passed successfully. This ensured that the core functionality of the site, including models, forms, views, and URLs, worked as expected. 
+After resolving the errors, all tests passed successfully. This ensured that the core functionality of the site, including models, forms, views, and URLs, worked as expected.
+
+---
 
 ### Manual Testing
 
 Throughout development, I conducted extensive manual testing to ensure the site functioned as intended. This involved testing various features, layouts, and interactions across different devices and browsers. Below is a detailed breakdown of the manual testing process:
 
 #### **JavaScript Functions**
-- Verified that all JavaScript functions worked as expected, including:
-  - Dropdown menus opening and closing correctly.
-  - Form validation providing real-time feedback.
-  - Buttons triggering the correct actions (submitting forms, deleting posts).
-  - Dynamic elements, such as modals and alerts, displaying and disappearing as intended.
+
+  **Dropdown Menus**
+- **Expected**: Clicking the dropdown menu icon causes a menu to open vertically.
+- **Testing**: Clicked the dropdown menu icon on both Desktop and Mobile.
+- **Result**: Dropdown menu opened horizontally.
+- **Fix**: Make small adjustments to the CSS properties `padding` and `text-align`. 
+
+  **Submit Button on Contact Us Form**
+- **Expected**: Clicking the submit button should send the form data and display a success message.
+- **Testing**: Filled out the form with valid data and clicked the submit button.
+- **Result**: The form was not submitted.
+- **Fix**: Ensured the `ContactUsForm` view correctly handled POST requests.
+
+  **Submit, Create, Draft, Edit, and Delete buttons**
+- **Expected**: Clicking X button would trigger Y action.
+- **Testing**: Clicked Submit, Create, Draft, Edit, and Delete buttons as both an Admin and regular user.
+- **Result**: All the buttons but Draft worked correctly, however, there was a lack of feedback.
+- **Fix**: Ensured the `PostPublishView` view correctly handled POST requests.
+
+  **Modals Appearing and Disappearing**
+- **Expected**: Modals will appear when triggered and disappear after X amount of time.
+- **Testing**: Clear cache, load site and wait for the modal to appear.
+- **Result**: Modal functioned correctly a single time. The modal did not reappear unless cache was cleared.
+- **Fix**: Added event listeners to `timedModal.js` to ensure the modal appears and disappears correctly.
+
+
+#### **Testing User Stories and Features**
+
+  **Navigation Links**
+- **Expected**: Clicking on a navigation link should redirect the user to the correct page.
+- **Testing**: Tested all navigation links by clicking them on the homepage.
+- **Result**: All links worked as expected and redirected to the correct pages.
+- **Fix**: No fixes were required.
+
+**User Registration**
+- **Expected**: A user should be able to register with valid credentials.
+- **Testing**: Attempted to register with valid and invalid credentials.
+- **Result**: Registration succeeded with valid credentials and failed with invalid credentials, displaying appropriate error messages.
+- **Fix**: No fixes were required.
+
+#### **Documentation of Current Bugs**
+
+**Profile Picture Upload**
+- **Issue**: Users cannot upload custom profile pictures due to compatibility issues.
+- **Impact**: Users are limited to selecting from predefined profile pictures.
+- **Planned Fix**: Investigate alternative methods for implementing custom profile picture uploads.
+
+**User Bios**
+- **Issue**: Users cannot view another users Bio page.
+- **Impact**: Users are unable to learn more about a specific User, other than what they have posted.
+- **Planned Fix**: Investigate methods to display a Bio page as the site does with Posts.
 
 #### **CSS Styling**
 - Ensured that CSS was applied correctly across all pages:
@@ -195,7 +246,7 @@ Throughout development, I conducted extensive manual testing to ensure the site 
 - **Reading**: Confirmed that posts displayed correctly on the forum page and individual post pages.
 - **Deleting**: Ensured that posts could be deleted by their authors and that a success notification appeared.
 - **Updating**: Verified that users could edit their posts and that changes were saved correctly.
-- **Drafting**: Tested the ability to save posts as drafts and publuish them later.
+- **Drafting**: Tested the ability to save posts as drafts and publish them later.
 
 #### **Comments**
 - **Posting**: Verified that users could post comments on published posts.
@@ -225,7 +276,7 @@ Throughout development, I conducted extensive manual testing to ensure the site 
   - Ensured sufficient color contrast for text and background elements.
   - Checked that all images had descriptive alt text.
   - Tested keyboard navigation to ensure all interactive elements were accessible.
-  - Multiple people, all with varying technical abilities, was used for this.
+  - Multiple people, all with varying technical abilities, were used for this.
 
 #### **How I Tested**
 - **Google DevTools**: Used Google Chrome's developer tools to simulate different devices, screen sizes, and network conditions. This allowed me to identify and fix layout issues, performance bottlenecks, and responsiveness problems. The Network tab was extremely useful for troubleshooting the POST issue which cropped up during automated testing.
@@ -245,6 +296,7 @@ After extensive manual testing and resolving all identified issues, the site is 
 
 ## Bug Fixes
 
+- Update Profile form not appearing.
 - Duplicate ratings.
 - Ratings not properly applying.
 - Deleted comments instead being duplicated.
