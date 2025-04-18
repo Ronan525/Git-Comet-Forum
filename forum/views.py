@@ -12,16 +12,21 @@ from django.contrib import messages
 
 
 class PostListView(generic.ListView):
+
     """
-    View to display a list of posts on the forum.
+    View to display a list of published posts on the forum.
+    Includes pagination and calculates total votes for each post.
     """
     model = Post
-    template_name = 'forum/index.html'  # Updated template name
+    template_name = 'forum/index.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 3
 
     def get_queryset(self):
+        """
+        Fetch only published posts and calculate total votes for each post.
+        """
         queryset = Post.objects.filter(status=1).order_by('-date_posted')
         for post in queryset:
             post.total_votes = post.ratings.aggregate(
@@ -30,6 +35,9 @@ class PostListView(generic.ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        """
+        Add draft posts to the context for authenticated users.
+        """
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context['draft_posts'] = Post.objects.filter(
@@ -41,23 +49,29 @@ class PostListView(generic.ListView):
 class ContactUsView(View):
     """
     View to handle the Contact Us form submissions.
+    Displays the form and processes valid submissions.
     """
     template_name = 'forum/contact_us.html'
 
     def get(self, request):
+        """
+        Display the Contact Us form.
+        """
         form = ContactUsForm()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
+        """
+        Process the submitted Contact Us form.
+        Save valid data to the database and display a success message.
+        """
         form = ContactUsForm(request.POST)
         if form.is_valid():
-            # Save the form data to the database
             ContactMessage.objects.create(
                 name=form.cleaned_data['name'],
                 email=form.cleaned_data['email'],
                 message=form.cleaned_data['message']
             )
-            # Display a success message
             return render(
                 request,
                 self.template_name,
@@ -68,16 +82,23 @@ class ContactUsView(View):
 
 class PostDetailView(generic.DetailView):
     """
-    View to display the details of a specific post.
+    View to display the details of a specific post, including comments.
+    Allows users to add comments or update the post if they are the author.
     """
     model = Post
     template_name = 'forum/post_detail.html'
     context_object_name = 'post'
 
     def get_object(self):
+        """
+        Fetch the post object based on the slug.
+        """
         return get_object_or_404(Post, slug=self.kwargs['slug'])
 
     def get_context_data(self, **kwargs):
+        """
+        Add comments and forms to the context for the post detail page.
+        """
         context = super().get_context_data(**kwargs)
         context['comments'] = Comment.objects.filter(
             post=self.get_object()
@@ -87,6 +108,9 @@ class PostDetailView(generic.DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        """
+        Handle form submissions for updating the post or adding a comment.
+        """
         post = self.get_object()
         if 'post_id' in request.POST:
             form = PostForm(request.POST, instance=post)
@@ -129,19 +153,20 @@ class PostCommentsView(View):
 class PostCreateView(View):
     """
     View to handle the creation of new posts.
+    Allows users to save posts as drafts or publish them immediately.
     """
     template_name = 'forum/post_form.html'
 
     def get(self, request):
         """
-        Handle GET requests to display the post creation form.
+        Display the post creation form.
         """
         form = PostForm()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         """
-        Handle POST requests to create a new post.
+        Process the submitted post creation form.
         """
         form = PostForm(request.POST)
         if form.is_valid():
@@ -162,7 +187,7 @@ class CommentUpdateView(View):
 
     def get(self, request, pk):
         """
-        Handle GET requests to display the comment update form.
+        Display the comment update form for the logged-in user.
         """
         comment = get_object_or_404(Comment, pk=pk, author=request.user)
         form = CommentForm(instance=comment)
@@ -174,7 +199,7 @@ class CommentUpdateView(View):
 
     def post(self, request, pk):
         """
-        Handle POST requests to update a comment.
+        Process the submitted comment update form.
         """
         comment = get_object_or_404(Comment, pk=pk, author=request.user)
         form = CommentForm(request.POST, instance=comment)
