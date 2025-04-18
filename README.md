@@ -79,6 +79,34 @@ Overall, GitHub Copilot has significantly enhanced my productivity and in some c
 
 ## Deployment
 
+- **Hosting Platform**: The project is hosted on **Heroku**, a cloud platform that simplifies deployment and scaling of web applications. The deployment process involves pushing the code to a Heroku Git repository, which triggers an automatic build and deployment pipeline.
+
+- **Environment Variables**: The project relies on several environment variables for secure configuration. These include:
+  - `SECRET_KEY`: A secret key used by Django for cryptographic signing.
+  - `DATABASE_URL`: The URL for the PostgreSQL database used in production.
+  - `DEBUG`: A boolean flag to toggle debug mode.
+  - `ALLOWED_HOSTS`: A list of allowed hosts for the application.
+  - `CLOUDINARY_URL`: The URL for Cloudinary, used for managing static and media files.
+
+- **Static and Media Files**: 
+  - Static files are managed using **WhiteNoise**, which allows serving static files directly from the Heroku server.
+  - Media files are stored and served using **Cloudinary**, a cloud-based media management service.
+
+- **Buildpacks**: The following buildpacks are used for deployment:
+  - `heroku/python`: For running the Django application.
+  - `heroku/nodejs`: For managing frontend dependencies and building static assets.
+
+- **Procfile**: The `Procfile` specifies the commands to run the application on Heroku. It includes:
+  ```plaintext
+  web: gunicorn git_comet.wsgi --log-file -
+  ```
+
+- **Cloning the Original Repository**:  
+  During the development process, I cloned the original Git Comet repository from [Git Comet Repository](https://github.com/Ronan525/Git-Comet). This was done to ensure that I had a local copy of the project for further development, testing, and customization. Cloning the repository allowed me to work on the project offline, experiment with new features, and make changes without affecting the live version of the site. It also provided a backup of the original codebase, ensuring that I could revert to a stable version if needed. The cloning process was performed using the following command:  
+  ```bash
+  git clone https://github.com/Ronan525/Git-Comet.git
+  ```
+
 ### Lighthouse Scores
 
 - **Lighthouse**: My first lighthouse test was extremely motivating. For mobile, I had a performance score of 92, accessibility score of 82, Best Practices score of 100, and an SEO score of 91. The desktop score was identical aside from performance which was at 98. I'm very happy with these results. Eventually, I began experimenting with further optimisations to increase site performance for mobile and desktop devices. Copilot suggested that I create two new JavaScript files, one for Critical JS, and the other for Non Critical JS. It also reccomended that I move critical CSS into base.html. After applying these, I deployed the site and tested it again, only to discover the sites JavaScript, certain CSS elements, and certain pages were completely broken. The only positive was a 1% improvement in desktop performance. For such a miniscule performance gain, I decided against applying these changes, and reverted to a previous version. The test at 4:52PM is test 1, and the test at 5:10PM/5:11PM is test 2.
