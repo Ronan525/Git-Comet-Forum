@@ -227,7 +227,7 @@ Throughout development, I conducted extensive manual testing to ensure the site 
 - **Expected**: Clicking X button would trigger Y action.
 - **Testing**: Clicked Submit, Create, Draft, Edit, and Delete buttons as both an Admin and regular user.
 - **Result**: All the buttons but Draft worked correctly, however, there was a lack of feedback.
-- **Fix**: Ensured the `PostPublishView` view correctly handled POST requests.
+- **Fix**: Ensured the `PostPublishView` view correctly handled POST requests. Also added notifications for deleting posts.
 
   **Modals Appearing and Disappearing**
 - **Expected**: Modals will appear when triggered and disappear after X amount of time.
@@ -244,7 +244,7 @@ Throughout development, I conducted extensive manual testing to ensure the site 
 - **Result**: All links worked as expected and redirected to the correct pages.
 - **Fix**: No fixes were required.
 
-**User Registration**
+  **User Registration**
 - **Expected**: A user should be able to register with valid credentials.
 - **Testing**: Attempted to register with valid and invalid credentials.
 - **Result**: Registration succeeded with valid credentials and failed with invalid credentials, displaying appropriate error messages.

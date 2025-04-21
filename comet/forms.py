@@ -2,6 +2,8 @@ from django import forms
 from allauth.account.forms import LoginForm, SignupForm
 from .models import UserProfile
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 
 class CustomLoginForm(LoginForm):
@@ -39,6 +41,14 @@ class CustomSignUpForm(SignupForm):
             'class': 'form-control custom-input',
             'placeholder': 'Confirm Password'
         })
+
+    def clean_password1(self):
+        password = self.cleaned_data.get('password1')
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            self.add_error('password1', e)
+        return password
 
 
 class ProfilePictureForm(forms.ModelForm):

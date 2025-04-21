@@ -12,24 +12,21 @@ from django.contrib import messages
 def mybio(request):
     """
     Handle the creation or update of a user's bio.
-
-    If the request method is POST, the function updates the user's bio with the
-    provided title and content. Otherwise, it retrieves the user's existing bio
-    and renders it on the comet page.
     """
+    # Ensure the user has a Bio object
+    bio, created = Bio.objects.get_or_create(user=request.user)
+
     if request.method == 'POST':
         # Retrieve title and content from the POST request
         title = request.POST.get('title')
         content = request.POST.get('content')
 
-        # Get or create a Bio object for the current user
-        bio, created = Bio.objects.get_or_create(user=request.user)
+        # Update the Bio object
         bio.title = title
         bio.content = content
         bio.save()
 
     # Retrieve the user's bio to display
-    bio = Bio.objects.filter(user=request.user).first()
     return render(request, 'comet/comet.html', {'bio': bio})
 
 
